@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "PostId": 1,
+        "CommentId": 1
+    },
+    {
+        "id": 2,
+        "PostId": 2,
+        "CommentId": 2
+    }
+]

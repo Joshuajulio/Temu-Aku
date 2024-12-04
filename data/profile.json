@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "UserId": 1,
+        "fullname": "Admin",
+        "picture": "https://icons.veryicon.com/png/o/commerce-shopping/wangdianbao-icon-monochrome/administrators-6.png",
+        "location": "Jakarta",
+        "dob": "1999-01-01",
+        "favorite1": "Sea",
+        "favorite2": "Coffee",
+        "favorite3": "Dog",
+        "motto": "I am the admin"
+    },
+    {
+        "id": 2,
+        "UserId": 2,
+        "fullname": "First User",
+        "picture": "https://cdn-icons-png.flaticon.com/512/1998/1998955.png",
+        "location": "Jakarta",
+        "dob": "2005-02-17",
+        "favorite1": "Mountain",
+        "favorite2": "Tea",
+        "favorite3": "Cat",
+        "motto": "I am the first user"
+    },
+    {
+        "id": 3,
+        "UserId": 3,
+        "fullname": "Second User",
+        "picture": "https://cdn-icons-png.flaticon.com/512/1998/1998955.png",
+        "location": "Jakarta",
+        "dob": "2007-08-01",
+        "favorite1": "Sea",
+        "favorite2": "Tea",
+        "favorite3": "Dog",
+        "motto": "I am the second user"
+    }
+]

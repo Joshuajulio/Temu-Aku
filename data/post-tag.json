@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "PostId": 1,
+        "TagId": 1
+    },
+    {
+        "id": 2,
+        "PostId": 1,
+        "TagId": 4
+    },
+    {
+        "id": 3,
+        "PostId": 2,
+        "TagId": 2
+    },
+    {
+        "id": 4,
+        "PostId": 2,
+        "TagId": 3
+    }
+]

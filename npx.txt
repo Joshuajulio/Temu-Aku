@@ -1,0 +1,23 @@
+npx sequelize-cli model:generate --name User --attributes email:string,password:string,admin:boolean
+npx sequelize-cli model:generate --name Profile --attributes UserId:integer,fullname:string,picture:string,location:string,dob:date,favorite1:string,favorite2:string,favorite3:string
+npx sequelize-cli model:generate --name Post --attributes UserId:integer,title:string,content:string,imgUrl:string,totalLikes:integer
+npx sequelize-cli model:generate --name Tag --attributes tagName:string
+npx sequelize-cli model:generate --name PostTag --attributes PostId:integer,TagId:integer
+npx sequelize-cli model:generate --name Comment --attributes UserId:integer,commentContent:string
+npx sequelize-cli model:generate --name PostComment --attributes PostId:integer,CommentId:integer
+npx sequelize-cli model:generate --name PostLikeUser --attributes PostId:integer,UserId:integer
+
+npx sequelize-cli migration:generate --name add-motto-to-profile
+
+npx sequelize-cli db:migrate
+
+npx sequelize-cli seed:generate --name user
+npx sequelize-cli seed:generate --name profile
+npx sequelize-cli seed:generate --name post
+npx sequelize-cli seed:generate --name tag
+npx sequelize-cli seed:generate --name post-tag
+npx sequelize-cli seed:generate --name comment
+npx sequelize-cli seed:generate --name post-comment
+npx sequelize-cli seed:generate --name post-like-user
+
+npx sequelize-cli db:seed:all

@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "email": "admin@temuaku.com",
+        "password": "admin123",
+        "admin": true
+    },
+    {
+        "id": 2,
+        "email": "user1@temuaku.com",
+        "password": "user1234",
+        "admin": false
+    },
+    {
+        "id": 3,
+        "email": "user2@temuaku.com",
+        "password": "user2345",
+        "admin": false
+    }
+]

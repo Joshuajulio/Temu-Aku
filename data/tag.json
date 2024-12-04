@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "tagName": "Movie"
+    },
+    {
+        "id": 2,
+        "tagName": "Music"
+    },
+    {
+        "id": 3,
+        "tagName": "Meme"
+    },
+    {
+        "id": 4,
+        "tagName": "Game"
+    },
+    {
+        "id": 5,
+        "tagName": "Food"
+    },
+    {
+        "id": 6,
+        "tagName": "Travel"
+    },
+    {
+        "id": 7,
+        "tagName": "Art"
+    },
+    {
+        "id": 8,
+        "tagName": "Fashion"
+    },
+    {
+        "id": 9,
+        "tagName": "Sports"
+    },
+    {
+        "id": 10,
+        "tagName": "Technology"
+    }
+]
