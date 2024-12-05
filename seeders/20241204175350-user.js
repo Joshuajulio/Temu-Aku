@@ -1,5 +1,6 @@
 'use strict';
 const fs = require("fs")
+const bcrypt = require('bcryptjs')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -16,6 +17,7 @@ module.exports = {
       delete el.id
       return {
         ...el,
+        password: bcrypt.hashSync(el.password, bcrypt.genSaltSync(10)),
         createdAt: new Date(),
         updatedAt: new Date()
       }

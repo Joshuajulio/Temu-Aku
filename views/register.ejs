@@ -3,34 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Temu Aku</title>
-    <link rel="stylesheet" href="/css/style.css">
+      <!-- Bootstrap CSS -->
+      <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Slich Slider -->
+      <link href="vendor/slick/slick/slick.css" rel="stylesheet">
+      <link href="vendor/slick/slick/slick-theme.css" rel="stylesheet">
+      <!-- Icofont -->
+      <link href="vendor/icofont/icofont.min.css" rel="stylesheet">
+      <!-- Font Icons -->
+      <link href="vendor/icons/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+      <!-- Custom Css -->
+      <link href="css/style.css" rel="stylesheet">
+      <!-- Material Icons -->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Temu Aku</title>
+
 </head>
-<body>
-    <div class="container">
-        <h1>Register</h1>
-        <form action="/register" method="POST">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<%= errors.instance.email %>" required>
-                <div class="error-message">
-                    <p>
-                        <%= errors?.errors?.email %>
-                    </p>
+<body class="bg-white">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 d-none d-lg-flex bg-image">
+                <img src="https://uitheme.shop/sociala/images/login-bg.jpg" alt="Login Image" class="img-fluid">
+            </div>
+            
+            <div class="col-lg-6 bg-white">
+                <div class="row justify-content-center align-items-center min-vh-100">
+                    <div class="col-md-8 col-lg-8 col-xl-6">
+                        <div class="card border-0 shadow-lg rounded-lg">
+                            <div class="card-body p-5">
+                                <div class="text-center mb-4">
+                                    <h1 class="h3 text-gray-900 font-weight-bold">Create Account</h1>
+                                </div>
+                                <form action="/register" method="POST">
+                                    <div class="form-group mb-4">
+                                        <label for="email" class="form-label text-gray-700">Email Address</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-end-0">
+                                                    <i class="mdi mdi-email-outline text-primary"></i>
+                                                </span>
+                                            </div>
+                                            <input type="email" class="form-control border-start-0" id="email" name="email" value="<%= errors.instance.email %>" required placeholder="Enter your email">
+                                        </div>
+                                        <div class="error-message text-danger small mt-1">
+                                            <p class="mb-0">
+                                                <%= errors?.errors?.email %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="password" class="form-label text-gray-700">Password</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-end-0">
+                                                    <i class="mdi mdi-lock-outline text-primary"></i>
+                                                </span>
+                                            </div>
+                                            <input type="password" class="form-control border-start-0" id="password" name="password" value="<%= errors.instance.password %>" required placeholder="Enter your password">
+                                        </div>
+                                        <div class="error-message text-danger small mt-1">
+                                            <p class="mb-0">
+                                                <%= errors?.errors?.password %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-4 rounded-pill">Create Account</button>
+                                </form>
+                                <p class="text-center text-gray-600 mb-0">Already have an account? <a href="/login" class="text-primary font-weight-bold text-decoration-none">Sign In</a></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" value="<%= errors.instance.password %>" required>
-                <div class="error-message">
-                    <p>
-                        <%= errors?.errors?.password %>
-                    </p>
-                </div>
-            </div>
-            <button type="submit" class="btn">Register</button>
-        </form>
-        <p>Already have an account? <a href="/login">Login here</a></p>
+        </div>
     </div>
+    <!-- Jquery Js -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Bundle Js -->
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Js -->
+    <script src="js/custom.js"></script>
+    <!-- Slick Js -->
+    <script src="vendor/slick/slick/slick.min.js"></script>
 </body>
 </html>
