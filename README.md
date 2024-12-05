@@ -6,7 +6,7 @@ Pair Project Hacktiv8 Phase1 : Social Media
 git clone https://github.com/Joshuajulio/Temu-Aku.git
 cd Temu-Aku
 npm init -y
-npm install pg express ejs sequelize bcryptjs express-session zxcvbn
+npm install pg express ejs sequelize bcryptjs express-session zxcvbn lodash
 npm install -D nodemon sequelize-cli
 ```
 

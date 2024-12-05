@@ -1,14 +1,142 @@
 [
     {
-        "id": 1,
-        "UserId": 2,
-        "content": "This is my first post",
-        "imgUrl": "https://media.tenor.com/KyYfMtohUZcAAAAe/crown-gameofthrones.png"
+      "id": 1,
+      "UserId": 1,
+      "content": "Welcome to TemuAku! Let's connect and share experiences.",
+      "imgUrl": "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0",
+      "createdAt": "2024-11-30T10:15:00Z"
     },
     {
-        "id": 2,
-        "UserId": 3,
-        "content": "I am the True Lord",
-        "imgUrl": "https://i.imgflip.com/7pfzka.jpg"
+      "id": 2,
+      "UserId": 1,
+      "content": "Exciting updates coming soon to our platform!",
+      "imgUrl": "https://images.unsplash.com/photo-1611162616475-46b635cb6868",
+      "createdAt": "2024-12-03T14:30:00Z"
+    },
+    {
+      "id": 3,
+      "UserId": 2,
+      "content": "Just watched an amazing movie. Highly recommend!",
+      "imgUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1",
+      "createdAt": "2024-12-01T20:45:00Z"
+    },
+    {
+      "id": 4,
+      "UserId": 2,
+      "content": "Music is the soundtrack of our lives. What's your favorite song?",
+      "imgUrl": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4",
+      "createdAt": "2024-12-04T09:00:00Z"
+    },
+    {
+      "id": 5,
+      "UserId": 3,
+      "content": "This meme perfectly describes my Monday mood!",
+      "imgUrl": "https://images.unsplash.com/photo-1607893378714-007fd47c8719",
+      "createdAt": "2024-11-29T08:20:00Z"
+    },
+    {
+      "id": 6,
+      "UserId": 3,
+      "content": "Who's up for a gaming session this weekend?",
+      "imgUrl": "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8",
+      "createdAt": "2024-12-02T18:30:00Z"
+    },
+    {
+      "id": 7,
+      "UserId": 4,
+      "content": "Trying out a new recipe today. Wish me luck!",
+      "imgUrl": "https://images.unsplash.com/photo-1556911220-bff31c812dba",
+      "createdAt": "2024-11-30T12:00:00Z"
+    },
+    {
+      "id": 8,
+      "UserId": 4,
+      "content": "Planning my next travel adventure. Any suggestions?",
+      "imgUrl": "https://images.unsplash.com/photo-1488646953014-85cb44e25828",
+      "createdAt": "2024-12-03T16:45:00Z"
+    },
+    {
+      "id": 9,
+      "UserId": 5,
+      "content": "Just finished my latest art piece. What do you think?",
+      "imgUrl": "https://images.unsplash.com/photo-1513364776144-60967b0f800f",
+      "createdAt": "2024-12-01T11:30:00Z"
+    },
+    {
+      "id": 10,
+      "UserId": 5,
+      "content": "Fashion week is here! Loving the new trends.",
+      "imgUrl": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d",
+      "createdAt": "2024-12-04T15:20:00Z"
+    },
+    {
+      "id": 11,
+      "UserId": 6,
+      "content": "Big game tonight! Who are you rooting for?",
+      "imgUrl": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2",
+      "createdAt": "2024-11-29T19:00:00Z"
+    },
+    {
+      "id": 12,
+      "UserId": 6,
+      "content": "Check out this cool new gadget I just got!",
+      "imgUrl": "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+      "createdAt": "2024-12-02T13:15:00Z"
+    },
+    {
+      "id": 13,
+      "UserId": 7,
+      "content": "Movie night with friends. Popcorn ready!",
+      "imgUrl": "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c",
+      "createdAt": "2024-11-30T20:00:00Z"
+    },
+    {
+      "id": 14,
+      "UserId": 7,
+      "content": "Just discovered an amazing new band. Give them a listen!",
+      "imgUrl": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4",
+      "createdAt": "2024-12-03T10:30:00Z"
+    },
+    {
+      "id": 15,
+      "UserId": 8,
+      "content": "This meme is too relatable. Tag someone who gets it!",
+      "imgUrl": "https://images.unsplash.com/photo-1607893378714-007fd47c8719",
+      "createdAt": "2024-12-01T14:45:00Z"
+    },
+    {
+      "id": 16,
+      "UserId": 8,
+      "content": "Level up! Just beat my high score in this game.",
+      "imgUrl": "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8",
+      "createdAt": "2024-12-04T21:00:00Z"
+    },
+    {
+      "id": 17,
+      "UserId": 9,
+      "content": "Foodie alert! Found the best burger joint in town.",
+      "imgUrl": "https://images.unsplash.com/photo-1551615593-ef5fe247e8f7",
+      "createdAt": "2024-11-29T13:30:00Z"
+    },
+    {
+      "id": 18,
+      "UserId": 9,
+      "content": "Throwback to my last vacation. Take me back!",
+      "imgUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+      "createdAt": "2024-12-02T09:45:00Z"
+    },
+    {
+      "id": 19,
+      "UserId": 10,
+      "content": "Street art spotting. Our city is full of hidden gems!",
+      "imgUrl": "https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8",
+      "createdAt": "2024-11-30T17:15:00Z"
+    },
+    {
+      "id": 20,
+      "UserId": 10,
+      "content": "OOTD: Trying out a new style. Thoughts?",
+      "imgUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f",
+      "createdAt": "2024-12-03T12:00:00Z"
     }
-]
+  ]

@@ -58,9 +58,11 @@
                                 </script>                         
                             </td>
                             <td>
-                                <a href="/<%= userId %>/<%= user.id %>/deleteUser" class="btn btn-danger btn-sm">
-                                    Delete
-                                </a>
+                                <% if (!user.admin) { %>
+                                    <a href="/<%= userId %>/<%= user.id %>/deleteUser" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">
+                                        Delete
+                                    </a>
+                                <% } %>
                             </td>
                         </tr>
                     <% }); %>

@@ -18,7 +18,7 @@ module.exports = {
       return {
         ...el,
         password: bcrypt.hashSync(el.password, bcrypt.genSaltSync(10)),
-        createdAt: new Date(),
+        createdAt: new Date(el.createdAt),
         updatedAt: new Date()
       }
     })

@@ -144,8 +144,8 @@ class UserController {
             const profile = await Profile.findOne({ where: { UserId: userId } })
             const posts = await Post.searchPosts(tag, query)
             const tags = await Tag.findAll()
-            // res.send({tag, query})
-            res.render('feeds', { posts, userId, tags, profile, getDuration})
+            const likesData = await Like.getLikesData(userId)
+            res.render('feeds', { posts, userId, tags, profile, likesData, getDuration})
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -201,8 +201,9 @@ class UserController {
             const profile = await Profile.findByPk(profileId)
             const tags = await Tag.findAll()
             const posts = await Post.searchPostsById(profileId)
+            const likesData = await Like.getLikesData(profileId)
             // res.send(posts)
-            res.render('viewProfile', { profile, posts, tags, userId })
+            res.render('viewProfile', { profile, posts, tags, userId, likesData })
         } catch (error) {
             res.send(error)
         }
@@ -297,11 +298,27 @@ class UserController {
         }
     }
 
+    static async errorPage(req, res) {
+        try {
+            const { userId } = req.params
+            const formattedError = JSON.parse(req.query.errors, "utf-8")
+            const profile = await Profile.findOne({ where: { UserId: userId } })
+            const tags = await Tag.findAll()
+            res.render('error', {userId, profile, tags, formattedError})
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
     static async logout(req, res) {
         try {
-            res.send("Log out")
-            // req.session.destroy()
-            // res.redirect('/')
+            req.session.destroy((error) => {
+                if (error) {
+                    res.send(error)
+                } else {
+                    res.redirect('/')
+                }
+            })
         } catch (error) {
             res.send(error)
         }

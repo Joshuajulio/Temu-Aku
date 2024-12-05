@@ -16,7 +16,7 @@ module.exports = {
      delete el.id
      return {
        ...el,
-       createdAt: new Date(),
+       createdAt: new Date(el.createdAt),
        updatedAt: new Date()
      }
    })

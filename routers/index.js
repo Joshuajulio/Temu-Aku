@@ -18,7 +18,6 @@ router.post('/login', UserController.loginExecute)
 
 // Middleware
 router.use(function (req, res, next) {
-    console.log(req.session)
     if (!req.session.userId) {
         const error = new Error('Please login first!')
         let formattedError = {"errors": {"emailpassword": error.message}}
@@ -27,6 +26,8 @@ router.use(function (req, res, next) {
         next()
     }
 })
+
+
 
 // User get /feeds
 router.get('/:userId/feeds', UserController.feeds)
@@ -58,18 +59,32 @@ router.get('/:userId/:postId/delete', UserController.deletePost)
 // User delete comment
 router.get('/:userId/:commentId/deleteComment', UserController.deleteComment)
 
+// User error page
+router.get('/:userId/error', UserController.errorPage)
+
+const isAdmin = (req, res, next) => {
+    if (req.session.admin) {
+        next()
+    } else {
+        const userId = req.session.userId
+        const error = new Error('Authorization Error: You are not authorized to access this page!')
+        let formattedError = {"errors": {"Authorization": error.message}}
+        res.redirect(`/${userId}/error?errors=${JSON.stringify(formattedError)}`)
+        res.render('error', {formattedError})
+    }
+}
 
 // Access admin panel
-router.get('/:userId/adminPanel', AdminController.adminPanel)
+router.get('/:userId/adminPanel', isAdmin, AdminController.adminPanel)
 
 // Admin delete user
-router.get('/:userId/:deleteId/deleteUser', AdminController.deleteUser)
+router.get('/:userId/:deleteId/deleteUser', isAdmin, AdminController.deleteUser)
 
 // Admin give admin
-router.get('/:userId/:newAdminId/giveAdmin', AdminController.giveAdmin)
+router.get('/:userId/:newAdminId/giveAdmin', isAdmin, AdminController.giveAdmin)
 
 // Admin revoke admin
-router.get('/:userId/:revokeAdminId/revokeAdmin', AdminController.revokeAdmin)
+router.get('/:userId/:revokeAdminId/revokeAdmin', isAdmin, AdminController.revokeAdmin)
 
 
 // User logout

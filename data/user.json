@@ -3,18 +3,70 @@
         "id": 1,
         "email": "admin@temuaku.com",
         "password": "admin123",
-        "admin": true
+        "admin": true,
+        "createdAt": "2024-11-20T13:30:00Z"
     },
     {
         "id": 2,
         "email": "user1@temuaku.com",
         "password": "user1234",
-        "admin": false
+        "admin": false,
+        "createdAt": "2024-11-20T13:30:00Z"
     },
     {
         "id": 3,
         "email": "user2@temuaku.com",
         "password": "user2345",
-        "admin": false
+        "admin": false,
+        "createdAt": "2024-11-20T13:30:00Z"
+    },
+    {
+        "id": 4,
+        "email": "user3@temuaku.com",
+        "password": "user3456",
+        "admin": false,
+        "createdAt": "2024-11-20T13:30:00Z"
+    },
+    {
+        "id": 5,
+        "email": "user4@temuaku.com",
+        "password": "user4567",
+        "admin": false,
+        "createdAt": "2024-11-20T13:30:00Z"
+    },
+    {
+        "id": 6,
+        "email": "user5@temuaku.com",
+        "password": "user5678",
+        "admin": false,
+        "createdAt": "2024-11-20T13:30:00Z"
+    },
+    {
+        "id": 7,
+        "email": "user6@temuaku.com",
+        "password": "user6789",
+        "admin": false,
+        "createdAt": "2024-11-20T13:30:00Z"
+    },
+    {
+        "id": 8,
+        "email": "user7@temuaku.com",
+        "password": "user7890",
+        "admin": false,
+        "createdAt": "2024-11-20T13:30:00Z"
+    },
+    {
+        "id": 9,
+        "email": "user8@temuaku.com",
+        "password": "user8901",
+        "admin": false,
+        "createdAt": "2024-11-20T13:30:00Z"
+    },
+    {
+        "id": 10,
+        "email": "user9@temuaku.com",
+        "password": "user9012",
+        "admin": false,
+        "createdAt": "2024-11-20T13:30:00Z"
     }
 ]
