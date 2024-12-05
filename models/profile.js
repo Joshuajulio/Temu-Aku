@@ -36,12 +36,26 @@ module.exports = (sequelize, DataTypes) => {
 
     static async findMatch(userId){
       const user = await this.findOne({where: {UserId: userId}})
-      const profiles = await this.findAll({ where: { UserId: { [Op.ne]: userId } } })
+      //filter out profile where UserId equal to current user Id, and from table Users where User.admin is true
+      const profiles = await this.findAll({
+              include: [{
+                model: sequelize.models.User,
+                where: {
+                  admin: false
+                }
+              }],
+              where: {
+                UserId: {
+                  [Op.ne]: userId
+                }
+              }
+            })
+      
+      // const profiles = await this.findAll({ where: { UserId: { [Op.ne]: userId } } })
       const similarity = profiles.map(profile => {
         profile.similarity = profile.matchPercentage(user.favourites)
         return profile
       })
-      console.log(similarity)
       return similarity.sort((a, b) => b.similarity - a.similarity)
     }
 

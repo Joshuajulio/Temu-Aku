@@ -19,6 +19,14 @@ class Controller{
         
         return formattedError;
     }
+
+    static async landingPage(req, res) {
+        try {
+            res.render('landingPage')
+        } catch (error) {
+            res.send(error)
+        }
+    }
 }
 
 class UserController {

@@ -1,8 +1,8 @@
 const router = require("express").Router()
-const { UserController, AdminController } = require('../controllers/controller')
+const { UserController, Controller } = require('../controllers/controller')
 
 // Landing Page
-router.get('/', UserController.loginForm)
+router.get('/', Controller.landingPage)
 
 // User /register
 router.get('/register', UserController.registerForm)
