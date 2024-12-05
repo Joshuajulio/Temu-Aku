@@ -34,5 +34,53 @@
         "favorite2": "Tea",
         "favorite3": "Dog",
         "motto": "I am the second user"
-    }
+    },
+    {
+        "id": 3,
+        "UserId": 3,
+        "fullname": "Alice Johnson",
+        "picture": "https://images.unsplash.com/photo-1506801127830-7b43878e84e0",
+        "location": "Bandung",
+        "dob": "1995-05-15T00:00:00.000Z",
+        "favorite1": "Sea",
+        "favorite2": "Tea",
+        "favorite3": "Cat",
+        "motto": "Life is better at the beach"
+      },
+      {
+        "id": 4,
+        "UserId": 4,
+        "fullname": "Bob Smith",
+        "picture": "https://images.unsplash.com/photo-1506801127830-7b43878e84e0",
+        "location": "Surabaya",
+        "dob": "1988-03-22T00:00:00.000Z",
+        "favorite1": "Mountain",
+        "favorite2": "Coffee",
+        "favorite3": "Dog",
+        "motto": "Adventure awaits!"
+      },
+      {
+        "id": 5,
+        "UserId": 5,
+        "fullname": "Charlie Brown",
+        "picture": "https://images.unsplash.com/photo-1506801127830-7b43878e84e0",
+        "location": "Yogyakarta",
+        "dob": "1992-11-30T00:00:00.000Z",
+        "favorite1": "Sea",
+        "favorite2": "Tea",
+        "favorite3": "Cat",
+        "motto": "Stay curious!"
+      },
+      {
+        "id": 6,
+        "UserId": 6,
+        "fullname": "Diana Prince",
+        "picture": "https://images.unsplash.com/photo-1506801127830-7b43878e84e0",
+        "location": "Bali",
+        "dob": "1990-07-19T00:00:00.000Z",
+        "favorite1": "Mountain",
+        "favorite2": "Coffee",
+        "favorite3": "Dog",
+        "motto": "#Wanderlust!"
+      }
 ]

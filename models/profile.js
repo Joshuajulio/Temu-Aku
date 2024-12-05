@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+const _ = require('lodash')
+const { Op } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
     /**
@@ -13,6 +15,36 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profile.belongsTo(models.User, {foreignKey: "UserId"})
     }
+
+    get age(){
+      return new Date().getFullYear() - new Date(this.dob).getFullYear()
+    }
+
+    get favourites(){
+      return [this.favorite1, this.favorite2, this.favorite3]
+    }
+
+    calculateSimilarity(arr1, arr2) {
+      const commonElements = _.intersection(arr1, arr2);
+      return commonElements.length / arr1.length;
+    }
+
+    matchPercentage(arr1){
+      const similarity = Math.round(this.calculateSimilarity(this.favourites, arr1)*100, 1);
+      return similarity
+    }
+
+    static async findMatch(userId){
+      const user = await this.findOne({where: {UserId: userId}})
+      const profiles = await this.findAll({ where: { UserId: { [Op.ne]: userId } } })
+      const similarity = profiles.map(profile => {
+        profile.similarity = profile.matchPercentage(user.favourites)
+        return profile
+      })
+      console.log(similarity)
+      return similarity.sort((a, b) => b.similarity - a.similarity)
+    }
+
   }
   Profile.init({
     UserId: {

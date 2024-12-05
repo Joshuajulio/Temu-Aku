@@ -23,4 +23,11 @@ router.get('/:userId/feeds', UserController.feeds)
 router.get('/:userId/:postId/like', UserController.likePost)
 router.get('/:userId/:postId/unlike', UserController.unlikePost)
 
+//User add comment
+router.post('/:userId/:postId/addComment', UserController.addComment)
+
+
+// User get /findmatch
+router.get('/:userId/findmatch', UserController.findMatch)
+
 module.exports = router

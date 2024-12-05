@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+const { getDuration } = require('../helpers/calculateDuration')
+
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {
     /**
@@ -14,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       Comment.belongsTo(models.User, {foreignKey: "UserId"})
       Comment.belongsTo(models.Post, {foreignKey: "PostId"})
     }
+
+    get duration(){
+      return getDuration(new Date(this.createdAt))
+    }
+
   }
   Comment.init({
     PostId: DataTypes.INTEGER,

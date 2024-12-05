@@ -1,4 +1,6 @@
 const { User, Profile, Post, Tag, Comment, PostTag, Like} = require('../models')
+const { Op } = require('sequelize')
+const { getDuration } = require('../helpers/calculateDuration')
 const bcrypt = require('bcryptjs')
 
 class Controller{
@@ -121,60 +123,17 @@ class UserController {
     static async feeds(req, res) {
         try {
             const { userId } = req.params
-            // Find all posts, comments, and likes
-            const posts = await Post.findAll({
-                include: [
-                    {
-                        model: User,
-                        attributes: ['id'],
-                        include: [
-                            {
-                                model: Profile,
-                                attributes: ['fullname', 'picture'],
-                            },
-                        ]
-                    },
-                    {
-                        model: Tag,
-                        attributes: ['tagName'],
-                    },
-                    {
-                        model: Comment,
-                        attributes: ['commentContent'],
-                        include: [
-                            {
-                                model: User,
-                                    attributes: ['id'],
-                                    include: [
-                                        {
-                                            model: Profile,
-                                            attributes: ['fullname', 'picture'],
-                                        },
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        model: Like,
-                        attributes: ['UserId'],
-                        include: [
-                            {
-                                model: User,
-                                attributes: ['id'],
-                                include: [
-                                    {
-                                        model: Profile,
-                                        attributes: ['fullname', 'picture'],
-                                    },
-                                ]
-                            }
-                        ]
-                    },
-                ],
-            });
-            // res.send(posts)
-            res.render('feeds', { posts, userId })
+            var { tag, query } = {tag: "", query: ""}
+            try{
+                var { tag, query } = req.query
+            } catch (error) {
+            }
+            const posts = await Post.searchPosts(tag, query)
+            const tags = await Tag.findAll()
+            // res.send({tag, query})
+            res.render('feeds', { posts, userId, tags, getDuration})
         } catch (error) {
+            console.log(error)
             res.send(error)
         }
     }
@@ -198,6 +157,28 @@ class UserController {
             res.send(error)
         }
     }
+
+    static async addComment(req, res) {
+        try {
+            const { userId, postId } = req.params
+            const { commentContent } = req.body
+            await Comment.create({ PostId: postId, UserId: userId, commentContent })
+            res.redirect(`/${userId}/feeds`)
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async findMatch(req, res) {
+        try {
+            const { userId } = req.params
+            const profiles = await Profile.findMatch(userId)
+            res.render('findMatch', { profiles, userId})
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
 }
 
 class AdminController {

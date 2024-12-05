@@ -24,12 +24,24 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
             <a class="navbar-brand" href="/<%= userId %>/feeds">
-            <img src="img/logo.png" height="30">
+            <img src="/img/TemuAku_logo.png" height="30">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+            <form class="d-flex ms-3" action="/<%= userId %>/feeds" method="GET">
+                <select class="form-select me-2" name="tag" aria-label="Filter by tag">
+                    <option value="All" selected>All Tags</option>
+                    <% tags.forEach(tag => { %>
+                    <option value="<%= tag.tagName %>"><%= tag.tagName %></option>
+                    <% }) %>
+                </select>
+                <input class="form-control me-2" type="search" placeholder="Search posts" aria-label="Search" name="query">
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fas fa-search">search</i>
+                </button>
+            </form>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                 <a class="nav-link active" href="/<%= userId %>/feeds">Feed</a>
@@ -49,16 +61,16 @@
     </nav>
     <div class="container mt-5">
         <% posts.forEach(post => { %>
-            <div class="card mb-4">
+            <div class="card mb-4" style="width: 700px; margin: 0 auto;">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                         <img src="<%= post.User.Profile.picture %>" alt="Profile Picture" class="rounded-circle me-3" style="width: 50px; height: 50px;">
                         <h5 class="card-title mb-0"><%= post.User.Profile.fullname %></h5>
                     </div>
-                    <p class="text-muted"><%= new Date(post.createdAt).toLocaleString() %></p>
+                    <p class="text-muted"><%= post.duration %></p>
                     <p class="card-text"><%= post.content %></p>
                     <% if (post.imgUrl) { %>
-                        <img src="<%= post.imgUrl %>" alt="Post Image" class="img-fluid mb-3">
+                        <img src="<%= post.imgUrl %>" alt="Post Image" class="img-fluid mb-3" style="width: 700px;">
                     <% } %>
                     <div class="mb-3">
                         <% post.Tags.forEach(tag => { %>
@@ -75,21 +87,30 @@
                                 <i class="far fa-thumbs-up"></i> Like (<%= post.Likes.length %>)
                             </a>
                         <% } %>
-                        <button class="btn btn-outline-secondary">
+                        <button class="btn btn-outline-secondary comment-toggle">
                             <i class="far fa-comment"></i> Comment
                         </button>
                     </div>
                 </div>
                 <% if (post.Comments.length > 0) { %>
                     <div class="card-footer">
-                        <h6>Comments:</h6>
+                        <form action="/<%= userId %>/<%= post.id %>/addComment" method="POST" class="mb-3">
+                            <div class="input-group">
+                                <input type="text" name="commentContent" class="form-control" placeholder="Write a comment..." required>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Send
+                                </button>
+                            </div>
+                        </form>
+                        
                         <% post.Comments.forEach(comment => { %>
                             <div class="d-flex mb-2">
                                 <img src="<%= comment.User.Profile.picture %>" alt="Commenter Picture" class="rounded-circle me-2" style="width: 30px; height: 30px;">
                                 <div>
                                     <strong><%= comment.User.Profile.fullname %>:</strong>
                                     <%= comment.commentContent %>
-                                </div>
+                                    <span class="text-muted ms-3" style="font-size: 10px;"><%= comment.duration %></span>                                
+                                </div>                            
                             </div>
                         <% }) %>
                     </div>
@@ -106,5 +127,16 @@
     <script src="js/custom.js"></script>
     <!-- Slick Js -->
     <script src="vendor/slick/slick/slick.min.js"></script>
+
+    <script>
+        document.querySelectorAll('.comment-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const cardFooter = this.closest('.card-body').nextElementSibling;
+                if (cardFooter && cardFooter.classList.contains('card-footer')) {
+                    cardFooter.style.display = cardFooter.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

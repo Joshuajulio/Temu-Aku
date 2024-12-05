@@ -348,6 +348,11 @@ body {
     display: block !important;
 }
 
+/* card-body in feed center page and smaller cards*/
+
+.mb-3{
+    width: 700px;
+}
 
 .pf-item img {
     height: 60px;
