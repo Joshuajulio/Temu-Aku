@@ -11,9 +11,12 @@ npm install -D nodemon sequelize-cli
 ```
 
 
-## 💾 DB Creation
+## 💾 DB Creation, Migration, Seeding
 ```bash
 #npx sequelize-cli init
 npx sequelize-cli db:create
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
 ```
+
 
