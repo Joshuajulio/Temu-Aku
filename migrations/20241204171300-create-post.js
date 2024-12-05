@@ -24,9 +24,6 @@ module.exports = {
       imgUrl: {
         type: Sequelize.STRING
       },
-      totalLikes: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -1,4 +1,4 @@
-const { User, Profile, Post, Tag, Comment, PostTag, PostComment, PostLikeUser} = require('../models')
+const { User, Profile, Post, Tag, Comment, PostTag, Like} = require('../models')
 const bcrypt = require('bcryptjs')
 
 class Controller{
@@ -36,8 +36,8 @@ class UserController {
     static async registerExecute(req, res) {
         try {
             const { email, password } = req.body
-            await User.create({ email, password })
-            res.redirect('createProfile')
+            const newUser = await User.create({ email, password })
+            res.redirect(`/${newUser.id}/createProfile`)
         } catch (error) {
             if (error.name === "SequelizeValidationError"){
                 let formattedError = await Controller.formatSequelizeError(error)
@@ -72,8 +72,7 @@ class UserController {
             if (!isValidPassword) {
                 throw new Error('Incorrect username or password.')
             }
-            // res.redirect('/feeds')
-            res.send("masuk feeds")
+            res.redirect(`/${user.id}/feeds`)
         } catch (error) {
             if (error.name === "SequelizeValidationError"){
                 let formattedError = await Controller.formatSequelizeError(error)
@@ -88,6 +87,117 @@ class UserController {
         }
     }
 
+    static async createProfileForm(req, res) {
+        try {
+            let errors = {"name": "SequelizeValidationError", "errors": {}, "instance": {}}
+            try {
+                errors = JSON.parse(req.query.errors, "utf-8")
+            } catch (error) {
+            }
+            const { userId } = req.params
+            res.render('createProfile', {userId, errors})
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async createProfileExecute(req, res) {
+        try {
+            const { userId } = req.params
+            const { fullname, picture, location, dob, favorite1, favorite2, favorite3, motto } = req.body
+            await Profile.create({ UserId:userId, fullname, picture, location, dob, favorite1, favorite2, favorite3, motto })
+            res.redirect(`/${userId}/feeds`)
+        } catch (error) {
+            if (error.name === "SequelizeValidationError"){
+                let formattedError = await Controller.formatSequelizeError(error)
+                let { userId } = req.params
+                res.redirect(`/${userId}/createProfile?errors=${JSON.stringify(formattedError)}`)
+                return
+            }
+            res.send(error)
+        }
+    }
+
+    static async feeds(req, res) {
+        try {
+            const { userId } = req.params
+            // Find all posts, comments, and likes
+            const posts = await Post.findAll({
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id'],
+                        include: [
+                            {
+                                model: Profile,
+                                attributes: ['fullname', 'picture'],
+                            },
+                        ]
+                    },
+                    {
+                        model: Tag,
+                        attributes: ['tagName'],
+                    },
+                    {
+                        model: Comment,
+                        attributes: ['commentContent'],
+                        include: [
+                            {
+                                model: User,
+                                    attributes: ['id'],
+                                    include: [
+                                        {
+                                            model: Profile,
+                                            attributes: ['fullname', 'picture'],
+                                        },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        model: Like,
+                        attributes: ['UserId'],
+                        include: [
+                            {
+                                model: User,
+                                attributes: ['id'],
+                                include: [
+                                    {
+                                        model: Profile,
+                                        attributes: ['fullname', 'picture'],
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                ],
+            });
+            // res.send(posts)
+            res.render('feeds', { posts, userId })
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async likePost(req, res) {
+        try {
+            const { userId, postId } = req.params
+            await Like.create({ PostId: postId, UserId: userId })
+            res.redirect(`/${userId}/feeds`)
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async unlikePost(req, res) {
+        try {
+            const { userId, postId } = req.params
+            await Like.destroy({ where: { PostId: postId, UserId: userId } })
+            res.redirect(`/${userId}/feeds`)
+        } catch (error) {
+            res.send(error)
+        }
+    }
 }
 
 class AdminController {

@@ -18,6 +18,15 @@ module.exports = {
         onUpdate: "cascade",
         onDelete: "cascade"
       },
+      PostId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {tableName: "Posts"},
+          key: "id"
+        },
+        onUpdate: "cascade",
+        onDelete: "cascade"
+      },
       commentContent: {
         type: Sequelize.STRING
       },

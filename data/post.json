@@ -3,14 +3,12 @@
         "id": 1,
         "UserId": 2,
         "content": "This is my first post",
-        "imgUrl": "https://media.tenor.com/KyYfMtohUZcAAAAe/crown-gameofthrones.png",
-        "totalLikes": 5
+        "imgUrl": "https://media.tenor.com/KyYfMtohUZcAAAAe/crown-gameofthrones.png"
     },
     {
         "id": 2,
         "UserId": 3,
         "content": "I am the True Lord",
-        "imgUrl": "https://i.imgflip.com/7pfzka.jpg",
-        "totalLikes": 100
+        "imgUrl": "https://i.imgflip.com/7pfzka.jpg"
     }
 ]

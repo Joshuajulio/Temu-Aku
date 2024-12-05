@@ -12,4 +12,15 @@ router.post('/register', UserController.registerExecute)
 router.get('/login', UserController.loginForm)
 router.post('/login', UserController.loginExecute)
 
+// User get /createProfile
+router.get('/:userId/createProfile', UserController.createProfileForm)
+router.post('/:userId/createProfile', UserController.createProfileExecute)
+
+// User get /feeds
+router.get('/:userId/feeds', UserController.feeds)
+
+//User like and unlike post
+router.get('/:userId/:postId/like', UserController.likePost)
+router.get('/:userId/:postId/unlike', UserController.unlikePost)
+
 module.exports = router

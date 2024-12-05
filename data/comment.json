@@ -1,11 +1,13 @@
 [
     {
         "id": 1,
+        "PostId": 1,
         "UserId": 3,
         "commentContent": "Hahaha I am the King not YOU!"
     },
     {
         "id": 2,
+        "PostId": 2,
         "UserId": 2,
         "commentContent": "Who are you??"
     }

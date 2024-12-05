@@ -12,7 +12,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    const data = JSON.parse(fs.readFileSync("./data/post-like-user.json", "utf-8")).map(el => {
+    const data = JSON.parse(fs.readFileSync("./data/like.json", "utf-8")).map(el => {
       delete el.id
       return {
         ...el,
@@ -20,7 +20,7 @@ module.exports = {
         updatedAt: new Date()
       }
     })
-    await queryInterface.bulkInsert("PostLikeUsers", data)
+    await queryInterface.bulkInsert("Likes", data)
   },
 
   async down (queryInterface, Sequelize) {
@@ -30,6 +30,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete("PostLikeUsers", null, {})
+    await queryInterface.bulkDelete("Likes", null, {})
   }
 };
