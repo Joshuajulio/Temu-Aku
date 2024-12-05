@@ -82,6 +82,9 @@ class UserController {
             if (!isValidPassword) {
                 throw new Error('Incorrect username or password.')
             }
+            console.log(user)
+            req.session.userId = user.id
+            req.session.admin = user.admin
             res.redirect(`/${user.id}/feeds`)
         } catch (error) {
             if (error.name === "SequelizeValidationError"){
@@ -116,6 +119,8 @@ class UserController {
             const { userId } = req.params
             const { fullname, picture, location, dob, favorite1, favorite2, favorite3, motto } = req.body
             await Profile.create({ UserId:userId, fullname, picture, location, dob, favorite1, favorite2, favorite3, motto })
+            req.session.userId = userId
+            req.session.admin = false
             res.redirect(`/${userId}/feeds`)
         } catch (error) {
             if (error.name === "SequelizeValidationError"){
@@ -136,10 +141,11 @@ class UserController {
                 var { tag, query } = req.query
             } catch (error) {
             }
+            const profile = await Profile.findOne({ where: { UserId: userId } })
             const posts = await Post.searchPosts(tag, query)
             const tags = await Tag.findAll()
             // res.send({tag, query})
-            res.render('feeds', { posts, userId, tags, getDuration})
+            res.render('feeds', { posts, userId, tags, profile, getDuration})
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -180,16 +186,182 @@ class UserController {
     static async findMatch(req, res) {
         try {
             const { userId } = req.params
+            const profile = await Profile.findOne({ where: { UserId: userId } })
+            const tags = await Tag.findAll()
             const profiles = await Profile.findMatch(userId)
-            res.render('findMatch', { profiles, userId})
+            res.render('findMatch', { profiles, tags, profile, userId})
         } catch (error) {
             res.send(error)
         }
     }
 
+    static async viewProfile(req, res) {
+        try {
+            const { userId, profileId } = req.params
+            const profile = await Profile.findByPk(profileId)
+            const tags = await Tag.findAll()
+            const posts = await Post.searchPostsById(profileId)
+            // res.send(posts)
+            res.render('viewProfile', { profile, posts, tags, userId })
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async editProfileForm(req, res) {
+        try {
+            const { userId, profileId } = req.params
+            let errors = {"name": "SequelizeValidationError", "errors": {}, "instance": {}}
+            try {
+                errors = JSON.parse(req.query.errors, "utf-8")
+            } catch (error) {
+            }
+            const profile = await Profile.findByPk(profileId)
+            const tags = await Tag.findAll()
+            res.render('editProfile', { profile, tags, errors, userId })
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async editProfileExecute(req, res) {
+        try {
+            const { userId, profileId } = req.params
+            const { fullname, picture, location, dob, favorite1, favorite2, favorite3, motto } = req.body
+            await Profile.update({ fullname, picture, location, dob, favorite1, favorite2, favorite3, motto }, { where: { id: profileId } })
+            res.redirect(`/${userId}/profile/${profileId}`)
+        } catch (error) {
+            if (error.name === "SequelizeValidationError"){
+                let formattedError = await Controller.formatSequelizeError(error)
+                let { userId, profileId } = req.params
+                res.redirect(`/${userId}/profile/${profileId}/edit?errors=${JSON.stringify(formattedError)}`)
+                return
+            }
+            res.send(error)
+        }
+    }
+
+    static async addPostForm(req, res) {
+        try {
+            const errors = {"name": "SequelizeValidationError", "errors": {}, "instance": {}}
+            try {
+                errors = JSON.parse(req.query.errors, "utf-8")
+            } catch (error) {
+            }
+            const { userId } = req.params
+            const profile = await Profile.findOne({ where: { UserId: userId } })
+            const tags = await Tag.findAll()
+            res.render('addPost', { profile, tags, userId, errors })
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async addPostExecute(req, res) {
+        try {
+            const { userId } = req.params
+            const { content, imgUrl, tags } = req.body
+            const newPost = await Post.create({ UserId: userId, content, imgUrl })
+            await PostTag.bulkCreate(tags.map(tag => {
+                return { PostId: newPost.id, TagId: tag }
+            }))
+            res.redirect(`/${userId}/feeds`)
+        } catch (error) {
+            if (error.name === "SequelizeValidationError"){
+                let formattedError = await Controller.formatSequelizeError(error)
+                let { userId } = req.params
+                res.redirect(`/${userId}/addPost?errors=${JSON.stringify(formattedError)}`)
+                return
+            }
+            res.send(error)
+        }
+    }
+
+    static async deletePost(req, res) {
+        try {
+            const { userId, postId } = req.params
+            await Post.destroy({ where: { id: postId } })
+            res.redirect(`/${userId}/feeds`)
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async deleteComment(req, res) {
+        try {
+            const { userId, postId, commentId } = req.params
+            await Comment.destroy({ where: { id: commentId } })
+            res.redirect(`/${userId}/feeds`)
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async logout(req, res) {
+        try {
+            res.send("Log out")
+            // req.session.destroy()
+            // res.redirect('/')
+        } catch (error) {
+            res.send(error)
+        }
+    }
 }
 
 class AdminController {
+    static async adminPanel(req, res) {
+        try {
+            const { userId } = req.params
+            const users = await User.findAll({ 
+                include: {
+                    model: Profile
+                },
+                attributes: { 
+                    exclude: ['password'] 
+                },
+                order: [
+                    ['id', 'ASC']
+                ]
+            })
+            const profile = await Profile.findOne({ where: { UserId: userId } })
+            const tags = await Tag.findAll()
+            // res.send(users)
+            res.render('adminPanel', { users, profile, tags, userId })
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    
+    static async deleteUser(req, res) {
+        try {
+            const { userId, deleteId } = req.params
+            await User.destroy({ where: { id: deleteId } })
+            res.redirect(`/${userId}/adminPanel`)
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async giveAdmin(req, res) {
+        try {
+            const { userId, newAdminId } = req.params
+            await User.update({ admin: true }, { where: { id: newAdminId } })
+            res.redirect(`/${userId}/adminPanel`)
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async revokeAdmin(req, res) {
+        try {
+            const { userId, revokeAdminId } = req.params
+            await User.update({ admin: false }, { where: { id: revokeAdminId } })
+            res.redirect(`/${userId}/adminPanel`)
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
 }
 
 module.exports = { UserController, AdminController, Controller }

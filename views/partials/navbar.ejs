@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/<%= userId %>/feeds">
+            <img src="/img/TemuAku.png" height="30">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <form class="d-flex ms-3" action="/<%= userId %>/feeds" method="GET">
+                <select class="form-select me-2" name="tag" aria-label="Filter by tag">
+                    <option value="All" selected>All Tags</option>
+                    <% tags.forEach(tag=> { %>
+                        <option value="<%= tag.tagName %>">
+                            <%= tag.tagName %>
+                        </option>
+                        <% }) %>
+                </select>
+                <input class="form-control me-2" type="search" placeholder="Search posts" aria-label="Search"
+                    name="query">
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fas fa-search">search</i>
+                </button>
+            </form>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/<%= userId %>/feeds">Feed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/<%= userId %>/findMatch">Find Match</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/<%= userId %>/profile/<%= profile.id %>">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/<%= userId %>/logout">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/<%= userId %>/adminPanel">Admin Panel</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

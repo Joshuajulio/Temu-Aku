@@ -88,7 +88,7 @@ module.exports = (sequelize, DataTypes) => {
           include: [
             {
               model: sequelize.models.Profile,
-              attributes: ['fullname', 'picture'],
+              attributes: ['id', 'fullname', 'picture'],
             },
           ]
         },
@@ -98,7 +98,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
           model: sequelize.models.Comment,
-          attributes: ['commentContent', 'createdAt'],
+          attributes: ['id', 'commentContent', 'createdAt'],
           include: [
             {
               model: sequelize.models.User,
@@ -106,7 +106,7 @@ module.exports = (sequelize, DataTypes) => {
               include: [
                 {
                   model: sequelize.models.Profile,
-                  attributes: ['fullname', 'picture'],
+                  attributes: ['id', 'fullname', 'picture'],
                 },
               ]
             },
@@ -142,6 +142,72 @@ module.exports = (sequelize, DataTypes) => {
     
       if (query && query !== '') {
         whereClause.content = { [Op.iLike]: `%${query}%` };
+      }
+    
+      const posts = await this.findAll({
+        where: whereClause,
+        include: includeClause,
+        order: [['createdAt', 'DESC']]
+      });
+    
+      return posts;
+    }
+
+    static async searchPostsById(id) {
+      const whereClause = {};
+      const includeClause = [
+        {
+          model: sequelize.models.User,
+          attributes: ['id'],
+          include: [
+            {
+              model: sequelize.models.Profile,
+              attributes: ['id', 'fullname', 'picture'],
+            },
+          ]
+        },
+        {
+          model: sequelize.models.Tag,
+          attributes: ['tagName'],
+        },
+        {
+          model: sequelize.models.Comment,
+          attributes: ['id', 'commentContent', 'createdAt'],
+          include: [
+            {
+              model: sequelize.models.User,
+              attributes: ['id'],
+              include: [
+                {
+                  model: sequelize.models.Profile,
+                  attributes: ['id', 'fullname', 'picture'],
+                },
+              ]
+            },
+          ],
+          separate: true,
+          order: [['createdAt', 'DESC']]
+        },
+        {
+          model: sequelize.models.Like,
+          attributes: ['UserId'],
+          include: [
+            {
+              model: sequelize.models.User,
+              attributes: ['id'],
+              include: [
+                {
+                  model: sequelize.models.Profile,
+                  attributes: ['fullname', 'picture'],
+                },
+              ]
+            }
+          ]
+        },
+      ];
+    
+      if (id) {
+        whereClause.UserId = id;
       }
     
       const posts = await this.findAll({

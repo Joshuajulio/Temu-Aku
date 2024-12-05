@@ -104,6 +104,12 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {msg: "Date of Birth is required"},
         notEmpty: {msg: "Date of Birth is required"},
+        isOlderThan18(value) {
+          const age = new Date().getFullYear() - new Date(value).getFullYear()
+          if (age < 18) {
+            throw new Error("You must be at least 18 years old")
+          }
+        }
       }
     },
     favorite1: {

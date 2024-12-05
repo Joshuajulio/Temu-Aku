@@ -1,0 +1,71 @@
+<% posts.forEach(post => { %>
+    <div class="card mb-4" style="max-width: 700px; width: 100%; margin: 0 auto;">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center mb-3">
+                    <a href="/<%= userId %>/profile/<%= post.User.Profile.id %>"><img src="<%= post.User.Profile.picture %>" alt="Profile Picture" class="rounded-circle me-3" style="width: 50px; height: 50px;"></a>
+                    <h5 class="card-title mb-0"><a href="/<%= userId %>/profile/<%= post.User.Profile.id %>"><%= post.User.Profile.fullname %></a></h5>
+                </div>
+                <% if (userId == post.User.id) { %>
+                    <a href="/<%= userId %>/<%= post.id %>/delete" class="text-danger">
+                        <i class="fas fa-trash"></i>delete
+                    </a>
+                <% } %>
+            </div>
+            <p class="text-muted"><%= post.duration %></p>
+            <p class="card-text"><%= post.content %></p>
+            <% if (post.imgUrl) { %>
+                <img src="<%= post.imgUrl %>" alt="Post Image" class="img-fluid mb-3" style="max-width: 700px; width: 100%;">
+            <% } %>
+            <div class="mb-3">
+                <% post.Tags.forEach(tag => { %>
+                    <span class="badge bg-secondary me-1"><%= tag.tagName %></span>
+                <% }) %>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <% if (post.Likes.some(like => like.UserId == userId)) { %>
+                    <a href="/<%= userId %>/<%= post.id %>/unlike" class="btn btn-primary">
+                        <i class="fas fa-thumbs-up"></i> Unlike (<%= post.Likes.length %>)
+                    </a>
+                <% } else { %>
+                    <a href="/<%= userId %>/<%= post.id %>/like" class="btn btn-outline-primary">
+                        <i class="far fa-thumbs-up"></i> Like (<%= post.Likes.length %>)
+                    </a>
+                <% } %>
+                <button class="btn btn-outline-secondary comment-toggle">
+                    <i class="far fa-comment"></i> Comment
+                </button>
+            </div>
+        </div>
+        <% if (post.Comments.length >= 0) { %>
+            <div class="card-footer" style="display: none;">
+                <form action="/<%= userId %>/<%= post.id %>/addComment" method="POST" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="commentContent" class="form-control" placeholder="Write a comment..." required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </form>
+                
+                <% post.Comments.forEach(comment => { %>
+                    <div class="d-flex mb-2 justify-content-between">
+                        <div class="d-flex">
+                            <a href="/<%= userId %>/profile/<%= comment.User.Profile.id %>"><img src="<%= comment.User.Profile.picture %>" alt="Commenter Picture" class="rounded-circle me-2" style="width: 30px; height: 30px;"></a>
+                            <div>
+                                <strong><a href="/<%= userId %>/profile/<%= comment.User.Profile.id %>"><%= comment.User.Profile.fullname %></a>:</strong>
+                                <%= comment.commentContent %>
+                                <span class="text-muted ms-3" style="font-size: 12px;"><%= comment.duration %></span>                                
+                            </div>
+                        </div>
+                        <% if (userId == comment.User.id) { %>
+                            <a href="/<%= userId %>/<%= comment.id %>/deleteComment" class="text-danger" style="font-size: 14px;">
+                                <i class="fas fa-trash"></i>delete
+                            </a>
+                        <% } %>
+                    </div>
+                <% }) %>                    
+            </div>
+        <% } %>            
+    </div>
+<% }) %>
