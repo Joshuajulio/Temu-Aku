@@ -82,7 +82,6 @@ class UserController {
             if (!isValidPassword) {
                 throw new Error('Incorrect username or password.')
             }
-            console.log(user)
             req.session.userId = user.id
             req.session.admin = user.admin
             res.redirect(`/${user.id}/feeds`)
