@@ -21,6 +21,15 @@
 
 </head>
 <body class="bg-white">
+
+    <% if (errors.errors?.SessionError) { %>
+        <div class="alert alert-warning alert-dismissible show" role="alert" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1050;">
+            <strong><%= errors.errors.SessionError %></strong> Please logout to return to landing page.
+            <a href="/<%= userId %>/logout" class="btn btn-sm btn-outline-dark ms-3">Logout</a>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+    
     <%- include('./partials/navbar') %>
     <div class="container mt-5">
         <div class="row">

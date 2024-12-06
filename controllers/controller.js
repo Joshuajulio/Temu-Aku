@@ -141,11 +141,17 @@ class UserController {
                 var { tag, query } = req.query
             } catch (error) {
             }
+            let errors = {}
+            try {
+                errors = JSON.parse(req.query.errors, "utf-8")
+            } catch (error) {
+            }
             const profile = await Profile.findOne({ where: { UserId: userId } })
             const posts = await Post.searchPosts(tag, query)
             const tags = await Tag.findAll()
             const likesData = await Like.getLikesData(userId)
-            res.render('feeds', { posts, userId, tags, profile, likesData, getDuration})
+            // res.send(errors)
+            res.render('feeds', { posts, userId, tags, profile, likesData, getDuration, errors})
         } catch (error) {
             console.log(error)
             res.send(error)

@@ -1,11 +1,24 @@
 const router = require("express").Router()
 const { UserController, AdminController, Controller } = require('../controllers/controller')
 
+// If logged in cannot go back to login/register
+const isAlreadyLoggedIn = (req, res, next) => {
+    if (req.session.userId) {
+        //show popup error "You are already logged in. Please <a href="/logout">logout</a> to continue."" on top of this page`/${req.session.userId}/feeds` and give option to logout
+        const error = new Error('You are already logged in.')
+        let formattedError = {"errors": {"SessionError": error.message}}
+        res.redirect(`/${req.session.userId}/feeds?errors=${JSON.stringify(formattedError)}`)
+    } else {
+        next()
+    }
+}
+
+
 // Landing Page
-router.get('/', Controller.landingPage)
+router.get('/', isAlreadyLoggedIn, Controller.landingPage)
 
 // User /register
-router.get('/register', UserController.registerForm)
+router.get('/register', isAlreadyLoggedIn, UserController.registerForm)
 router.post('/register', UserController.registerExecute)
 
 // User get /createProfile
@@ -13,8 +26,9 @@ router.get('/:userId/createProfile', UserController.createProfileForm)
 router.post('/:userId/createProfile', UserController.createProfileExecute)
 
 // User get /login
-router.get('/login', UserController.loginForm)
-router.post('/login', UserController.loginExecute)
+router.get('/login', isAlreadyLoggedIn, UserController.loginForm)
+router.post('/login', isAlreadyLoggedIn, UserController.loginExecute)
+
 
 // Middleware
 router.use(function (req, res, next) {
@@ -26,7 +40,6 @@ router.use(function (req, res, next) {
         next()
     }
 })
-
 
 
 // User get /feeds
